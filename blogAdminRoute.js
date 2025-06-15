@@ -14,7 +14,7 @@ router.get("/blogs", async (req, res) => {
     });
     res.status(200).json(response.data);
   } catch (err) {
-    console.error("Error fetching all blogs (admin):", err.message);
+    console.error("Error fetching all blogs (admin):", err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -29,7 +29,22 @@ router.get("/blogs/user/:userId", async (req, res) => {
     });
     res.status(200).json(response.data);
   } catch (err) {
-    console.error("Error fetching user blogs (admin):", err.message);
+    console.error("Error fetching user blogs (admin):", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Get all users
+router.get("/users/", async (req, res) => {
+  try {
+    const response = await blogAPI.get(`/admin/users`, {
+      headers: {
+        "x-user-role": req.user.role,
+      },
+    });
+    res.status(200).json(response.data);
+  } catch (err) {
+    console.error("Error fetching user blogs (admin):", err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -44,7 +59,7 @@ router.delete("/blogs/:id", async (req, res) => {
     });
     res.status(200).json(response.data);
   } catch (err) {
-    console.error("Error deleting blog (admin):", err.message);
+    console.error("Error deleting blog (admin):", err);
     res.status(500).json({ message: "Server error" });
   }
 });
