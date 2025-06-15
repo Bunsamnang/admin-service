@@ -43,7 +43,7 @@ router.get("/users", async (req, res) => {
         "x-user-role": req.headers["x-user-role"],
       },
     }); // <-- Directly calling auth
-    const users = response.data.users;
+    const users = response.data;
 
     res.status(200).json({
       message: "Fetched users successfully",
