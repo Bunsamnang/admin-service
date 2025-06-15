@@ -1,5 +1,6 @@
 import express from "express";
 import blogAPI from "./utils/blogAPI.js";
+import userAPI from "./utils/userAPI.js";
 const router = express.Router();
 
 // Get all blogs (admin)
