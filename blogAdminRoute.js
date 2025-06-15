@@ -35,17 +35,22 @@ router.get("/blogs/user/:userId", async (req, res) => {
 });
 
 // Get all users
-router.get("/users/", async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
-    const response = await blogAPI.get(`/admin/users`, {
+    const response = await userAPI.get("/", {
       headers: {
-        "x-user-role": req.user.role,
+        "x-user-role": req.headers["x-user-role"],
       },
+    }); // <-- Directly calling auth
+    const users = response.data.users;
+
+    res.status(200).json({
+      message: "Fetched users successfully",
+      users,
     });
-    res.status(200).json(response.data);
   } catch (err) {
-    console.error("Error fetching user blogs (admin):", err);
-    res.status(500).json({ message: "Server error" });
+    console.error("Blog-service failed to get users from auth:", err.message);
+    res.status(500).json({ message: "Failed to fetch users" });
   }
 });
 
